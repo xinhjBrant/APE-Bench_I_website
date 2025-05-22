@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APE-Bench I</title>
+    <style>
+        /* ===== Base & Layout ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #faf7eb;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header, footer { background-color: white; }
+
+        /* ===== Header ===== */
+        header {
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(127, 0, 25, 0.1);
+        }
+        h1 { font-weight: 400; font-size: 32px; color: #333; }
+        .subtitle { font-size: 18px; color: #666; margin-top: 8px; }
+        nav a { color: #7f0019; text-decoration: none; margin-left: 20px; }
+        nav a:hover { text-decoration: underline; color: #990033; }
+
+        /* ===== Sections ===== */
+        main { padding: 40px 0; }
+        section { margin-bottom: 60px; }
+        h2 { font-weight: 400; font-size: 26px; margin-bottom: 16px; color: #7f0019; }
+        h3 { font-weight: 400; font-size: 18px; margin: 15px 0 10px; color: #7f0019; }
+        h4 { font-weight: 400; font-size: 16px; margin: 12px 0 8px; color: #7f0019; }
+        p { color: #555; margin-bottom: 16px; }
+        ul { margin-left: 20px; margin-bottom: 16px; }
+        li { margin-bottom: 6px; }
+
+        /* ===== Info Box ===== */
+        .info-box {
+            background-color: white;
+            border: 1px solid rgba(127, 0, 25, 0.1);
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(127, 0, 25, 0.05);
+            margin-bottom: 20px;
+        }
+
+        /* ===== Mission Statement ===== */
+        .mission-statement {
+            background: linear-gradient(135deg, rgba(127, 0, 25, 0.05), rgba(127, 0, 25, 0.02));
+            border-left: 4px solid #7f0019;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* ===== Image ===== */
+        .image-container { margin: 20px 0; text-align: center; }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(127, 0, 25, 0.05);
+        }
+        .image-caption { font-size: 14px; color: #666; margin-top: 8px; text-align: center; }
+
+        /* ===== Leaderboard Table ===== */
+        .table-container {
+            overflow-x: auto;
+            background-color: white;
+            border: 1px solid rgba(127, 0, 25, 0.1);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(127, 0, 25, 0.05);
+            margin-bottom: 20px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th {
+            text-align: left;
+            padding: 12px 15px;
+            background-color: #f8f5e9;
+            font-weight: 400;
+            color: #7f0019;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(127, 0, 25, 0.1);
+            cursor: pointer;
+        }
+        th:hover { background-color: #f5f1e2; }
+        td { padding: 12px 15px; border-bottom: 1px solid rgba(127, 0, 25, 0.05); }
+        tr:nth-child(even) { background-color: #fdfcf9; }
+        tr:hover { background-color: #f8f5e9; }
+        .rank-1 { font-weight: 500; color: #7f0019; }
+        .last-updated { font-size: 14px; color: #888; margin-top: 8px; }
+
+        /* ===== Footer ===== */
+        footer {
+            padding: 30px 0;
+            border-top: 1px solid rgba(127, 0, 25, 0.1);
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            h1 { font-size: 24px; }
+            .subtitle { font-size: 16px; }
+            th, td { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== Header ===== -->
+    <header>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1>APE-Bench I</h1>
+                <p class="subtitle">File-level Automated Proof Engineering of Formal Math Libraries</p>
+            </div>
+            <nav>
+                <a href="https://github.com/xinhjBrant/APE-Bench_I" target="_blank">GitHub</a>
+                <a href="https://huggingface.co/APE-Bench" target="_blank">HuggingFace</a>
+                <a href="https://arxiv.org/abs/2504.19110" target="_blank">arXiv</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <!-- ===== About APE-Bench I ===== -->
+            <section id="about">
+                <h2>About APE-Bench I</h2>
+                
+                <div class="mission-statement">
+                    <p>
+                        <strong>Formal mathematics is approaching a critical scalability limit.</strong> As libraries like Mathlib4 grow rapidly in size and complexity, traditional approaches to manual proof development are no longer sustainable. The future lies not just in automating individual theorem proving, but in building <strong>Automated Proof Engineering (APE) systems</strong>—intelligent infrastructure that can understand, manage, refactor, and evolve large-scale formal codebases much like modern software engineering systems, while ensuring mathematical correctness at every step.
+                    </p>
+                    <p>
+                        This represents a fundamental shift from reactive proof search to proactive, AI-supported collaboration in mathematical formalization. Instead of merely solving isolated problems, APE systems must handle the full spectrum of real-world development challenges: dependency management, API evolution, coordinated refactoring, and continuous integration workflows adapted for mathematical rigor.
+                    </p>
+                    <p>
+                        Realizing this vision requires more than algorithmic advances—it demands a robust, open research ecosystem. Fragmented tooling and isolated experiments slow progress across the field. What's needed is a unified foundation that enables reproducible research, community-driven development, and standardized evaluation practices. <strong>APE-Bench I represents our contribution toward building this essential infrastructure for the emerging APE research community.</strong>
+                    </p>
+                </div>
+
+                <div class="info-box">
+                    <h3>APE-Bench I: From Vision to Implementation</h3>
+                    <p>
+                        APE-Bench I operationalizes this vision by introducing instruction-guided file-level editing tasks derived from 
+                        real Mathlib4 development workflows. Moving beyond traditional isolated theorem-proving benchmarks, it evaluates 
+                        AI systems on the practical proof engineering challenges that formal mathematics practitioners face daily: 
+                        refactoring code, adding features, debugging errors, and maintaining consistency across evolving codebases.
+                    </p>
+
+                    <div class="image-container">
+                        <img src="https://raw.githubusercontent.com/xinhjBrant/APE-Bench_I/master/assets/pipeline.jpg" alt="APE-Bench I: Benchmark structure and evaluation pipeline" />
+                        <p class="image-caption">APE-Bench I: Benchmark structure and evaluation pipeline</p>
+                    </div>
+
+                    <h4>Core Design Principles</h4>
+                    <p>APE-Bench I is built on four foundational goals that ensure its relevance and rigor:</p>
+                    <ul>
+                        <li><strong>Realism:</strong> Extracted from actual Mathlib4 commits, preserving the structural integrity and complexity of real development practices</li>
+                        <li><strong>Stratification:</strong> Multi-stage filtering pipeline removes trivial edits and categorizes tasks by function and difficulty to support diverse evaluation needs</li>
+                        <li><strong>Scalable Syntax-Semantics Evaluation:</strong> Combines syntactic verification via Lean compiler with semantic judgement through LLM-as-a-judge systems</li>
+                        <li><strong>Continual Evolvability:</strong> Fully automated construction pipelines enable updates that evolve with the underlying library</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>Positioning in the APE Research Landscape</h3>
+                    <p>APE-Bench I serves as the foundation for a staged progression toward comprehensive automated proof engineering capabilities:</p>
+
+                    <div class="image-container">
+                        <img src="https://raw.githubusercontent.com/xinhjBrant/APE-Bench_I/master/assets/road_map.jpg" alt="The APE-Bench series roadmap" />
+                        <p class="image-caption">The APE-Bench series: A staged roadmap for automated proof engineering</p>
+                    </div>
+
+                    <ul>
+                        <li><strong>APE-Bench I (Current):</strong> Single-file instruction-guided edits with localized scope—establishing fundamental evaluation protocols</li>
+                        <li><strong>APE-Bench II (Future):</strong> Multi-file coordination and project-level verification—scaling to realistic development workflows</li>
+                        <li><strong>APE-Bench III (Vision):</strong> Autonomous workflows with planning, editing, and iterative repair—achieving human-level proof engineering capabilities</li>
+                    </ul>
+                    
+                    <p>
+                        This progression mirrors the evolution from individual code editing to full software development lifecycle automation, 
+                        but adapted for the unique constraints and requirements of formal mathematical reasoning.
+                    </p>
+                </div>
+            </section>
+
+            <!-- ===== Current Leaderboard ===== -->
+            <section id="leaderboard">
+                <h2>Current Leaderboard</h2>
+                <div class="table-container">
+                    <table id="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="rank">Rank <span class="sort-icon">↑</span></th>
+                                <th data-sort="model">Model</th>
+                                <th data-sort="sampleBudget">Samples</th>
+                                <th data-sort="easy">Easy Pass Rate (%)</th>
+                                <th data-sort="medium">Medium Pass Rate (%)</th>
+                                <th data-sort="hard">Hard Pass Rate (%)</th>
+                                <th data-sort="successRate">Overall Pass Rate (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <p class="last-updated">Last updated: May 20 2025. Results are based on the pass@k metric with hybrid syntax-semantics evaluation.</p>
+            </section>
+
+            <!-- ===== Latest News ===== -->
+            <section id="news">
+                <h2>Latest News</h2>
+                <div class="info-box">
+                    <ul>
+                        <li><strong>May 2025:</strong> APE-Bench I selected as Track 1 of the <a href="https://sites.google.com/view/ai4mathworkshopicml2025/challenge" target="_blank">ICML 2025 AI4Math Workshop Challenge</a>, providing a platform for automated proof engineering evaluation</li>
+                        <li><strong>May 2025:</strong> Dataset and evaluation infrastructure released, providing the research community with reproducible multi-version Lean evaluation capabilities</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ===== Current Activities ===== -->
+            <section id="activities">
+                <h2>Current Activities</h2>
+                
+                <div class="info-box">
+                    <h3>ICML 2025 Competition</h3>
+                    <p>APE-Bench I serves as Track 1 of the ICML 2025 AI4Math Workshop Challenge, providing researchers with a platform to evaluate their automated proof engineering systems.</p>
+                    
+                    <h4>Key Information</h4>
+                    <ul>
+                        <li><strong>Final Evaluation:</strong> July 7, 2025</li>
+                        <li><strong>Submission Portal:</strong> <a href="https://www.codabench.org/competitions/8357/" target="_blank">Codabench</a></li>
+                        <li><strong>Submission Limits:</strong> Maximum 5 submissions per day, 100 total for the entire competition period</li>
+                    </ul>
+
+                    <h4>Evaluation Tracks</h4>
+                    <ul>
+                        <li><strong>Public Leaderboard:</strong> Evaluated on the canonical test split from our paper and displayed on this website. Results are updated weekly based on community submissions, providing transparent performance tracking.</li>
+                        <li><strong>Private Leaderboard:</strong> Uses a hidden portion of the test set with strengthened semantic judging to minimize overfitting risk. Final results will be revealed on July 7, 2025.</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>Independent Evaluation</h3>
+                    <p>Researchers can independently evaluate their systems using APE-Bench I infrastructure:</p>
+                    <ul>
+                        <li><strong>Complete Pipeline:</strong> Access the full evaluation infrastructure via <a href="https://github.com/xinhjBrant/APE-Bench_I" target="_blank">GitHub</a></li>
+                        <li><strong>Dataset Access:</strong> Download benchmark data from <a href="https://huggingface.co/APE-Bench" target="_blank">HuggingFace</a></li>
+                        <li><strong>Technical Documentation:</strong> Detailed methodology in our <a href="https://arxiv.org/abs/2504.19110" target="_blank">arXiv paper</a></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ===== Ongoing Development & Community ===== -->
+            <section id="community">
+                <h2>Ongoing Development & Community</h2>
+                <div class="info-box">
+                    <p>
+                        APE-Bench I aims to serve as a foundation for building comprehensive automated proof engineering infrastructure. 
+                        Our development extends beyond evaluation to create agent frameworks and 
+                        community tools that support the entire APE research lifecycle.
+                    </p>
+                </div>
+
+                <h3>Agent Framework Development</h3>
+                <div class="info-box">
+                    <p>We are building APE-Bench I into a complete agent development platform through these focused phases:</p>
+                    
+                    <h4>Phase 1: Error-Driven Repair</h4>
+                    <ul>
+                        <li><strong>Compilation Error Resolution:</strong> Agents that interpret Lean compiler feedback and generate targeted fixes</li>
+                        <li><strong>Iterative Refinement:</strong> Multi-round editing workflows with feedback loops and incremental improvement</li>
+                        <li><strong>Key Deliverables:</strong> Error interpretation modules, iterative repair algorithms, baseline agent implementations</li>
+                    </ul>
+
+                    <h4>Phase 2: Context-Aware Systems</h4>
+                    <ul>
+                        <li><strong>Mathlib Integration:</strong> Information retrieval systems for relevant theorems, definitions, and proof patterns</li>
+                        <li><strong>Context-Guided Generation:</strong> Code generation informed by retrieved mathematical context and library conventions</li>
+                        <li><strong>Key Deliverables:</strong> Mathlib search APIs, context integration frameworks, retrieval-augmented agents</li>
+                    </ul>
+
+                    <h4>Phase 3: Integrated Workflows</h4>
+                    <ul>
+                        <li><strong>Tool Standardization:</strong> Unified APIs for compilation, retrieval, and verification as callable agent tools</li>
+                        <li><strong>Framework Adaptation:</strong> Integration with mainstream agent architectures (agentless, allhands, etc.)</li>
+                        <li><strong>Key Deliverables:</strong> Standardized tool interfaces, framework adapters, comparative evaluation protocols</li>
+                    </ul>
+                </div>
+
+                <h3>Infrastructure Enhancement</h3>
+                <div class="info-box">
+                    <p>Continuous improvement of our evaluation infrastructure to support advanced agent development:</p>
+                    
+                    <h4>Eleanstic Servicification</h4>
+                    <ul>
+                        <li><strong>Service Architecture:</strong> Transform from pipeline component to on-demand verification service with request queues</li>
+                        <li><strong>API Development:</strong> RESTful interfaces supporting real-time compilation checking and batch processing</li>
+                        <li><strong>Scalability:</strong> Containerized deployment and cloud infrastructure for high-throughput agent development</li>
+                    </ul>
+
+                    <h4>Semantic Evaluation Improvement</h4>
+                    <ul>
+                        <li><strong>Accuracy Enhancement:</strong> More robust semantic evaluation with reduced false positives and improved reliability</li>
+                        <li><strong>Validation Framework:</strong> Human-verified ground truth datasets for measuring evaluation system accuracy</li>
+                        <li><strong>Specialized Models:</strong> Judge models trained specifically for proof engineering task evaluation</li>
+                    </ul>
+
+                    <h4>Engineering Excellence</h4>
+                    <ul>
+                        <li><strong>Development Infrastructure:</strong> Comprehensive CI/CD pipelines, automated testing, and deployment systems</li>
+                        <li><strong>Documentation Standards:</strong> Unified API references, contribution guidelines, and technical documentation</li>
+                        <li><strong>Quality Assurance:</strong> Code standards, performance monitoring, and maintainability improvements</li>
+                    </ul>
+                </div>
+
+                <h3>How to Contribute</h3>
+                <div class="info-box">
+                    <p>
+                        Join our effort to build unified, reusable APE research infrastructure. We emphasize collaborative development 
+                        within a well-maintained codebase to maximize research impact and prevent fragmented efforts.
+                    </p>
+
+                    <h4>Contribution Process</h4>
+                    <ul>
+                        <li><strong>Issue Discussion:</strong> Report bugs and technical challenges via <a href="https://github.com/xinhjBrant/APE-Bench_I/issues" target="_blank">GitHub Issues</a></li>
+                        <li><strong>Feature Planning:</strong> Propose new features and research directions through <a href="https://github.com/xinhjBrant/APE-Bench_I/discussions" target="_blank">GitHub Discussions</a></li>
+                        <li><strong>Development:</strong> Fork repository, implement in dedicated branches, submit PRs with comprehensive documentation</li>
+                    </ul>
+
+                    <h4>Impact & Recognition</h4>
+                    <ul>
+                        <li><strong>Academic Publication:</strong> We actively encourage contributors to publish their work—technical reports, research papers, and novel approaches that advance the APE field</li>
+                        <li><strong>Research Collaboration:</strong> Connect with core team members and fellow contributors for joint research projects</li>
+                        <li><strong>Field Development:</strong> Help establish evaluation practices and methodologies for the emerging APE research area</li>
+                        <li><strong>Community Influence:</strong> Shape the direction of APE research through contributions that become part of the shared infrastructure</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        <div class="container">
+            Contact: <a href="mailto:H.Xin-3@sms.ed.ac.uk">H.Xin-3@sms.ed.ac.uk</a>
+        </div>
+    </footer>
+
+    <!-- ===== Leaderboard Script ===== -->
+    <script>
+        const leaderboardData = [
+            { rank: 1, model: "Gemini 2.5 Pro Preview", easy: 53.49, medium: 14.77, hard: 0.00, successRate: 18.04, sampleBudget: 16 },
+            { rank: 2, model: "Claude Sonnet 3.7 (thinking)", easy: 38.98, medium: 10.21, hard: 0.00, successRate: 12.73, sampleBudget: 16 },
+            { rank: 3, model: "DeepSeek R1", easy: 33.84, medium: 10.82, hard: 0.00, successRate: 12.55, sampleBudget: 16 },
+            { rank: 4, model: "DeepSeek V3", easy: 38.53, medium: 9.10, hard: 0.00, successRate: 11.81, sampleBudget: 16 },
+            { rank: 5, model: "Claude Sonnet 3.7", easy: 43.82, medium: 6.96, hard: 0.00, successRate: 10.83, sampleBudget: 16 },
+            { rank: 6, model: "o3-mini", easy: 28.81, medium: 6.50, hard: 0.00, successRate: 8.60, sampleBudget: 16 },
+            { rank: 7, model: "GPT-4o", easy: 28.82, medium: 4.06, hard: 0.00, successRate: 6.73, sampleBudget: 16 },
+            { rank: 8, model: "Doubao 1.5 Pro", easy: 18.98, medium: 0.79, hard: 0.00, successRate: 2.98, sampleBudget: 16 }
+        ];
+
+        let currentSort = { column: 'rank', direction: 'ascending' };
+
+        function renderTable() {
+            const tbody = document.querySelector('#leaderboard-table tbody');
+            tbody.innerHTML = '';
+            leaderboardData.forEach(entry => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td${entry.rank === 1 ? ' class="rank-1"' : ''}>${entry.rank}</td>
+                    <td${entry.rank === 1 ? ' class="rank-1"' : ''}>${entry.model}</td>
+                    <td>${entry.sampleBudget}</td>
+                    <td>${entry.easy.toFixed(2)}</td>
+                    <td>${entry.medium.toFixed(2)}</td>
+                    <td>${entry.hard.toFixed(2)}</td>
+                    <td>${entry.successRate.toFixed(2)}</td>`;
+                tbody.appendChild(row);
+            });
+            document.querySelectorAll('th').forEach(th => {
+                const icon = th.querySelector('.sort-icon');
+                if (!icon) return;
+                icon.textContent = th.getAttribute('data-sort') === currentSort.column ? (currentSort.direction === 'ascending' ? '↑' : '↓') : '';
+            });
+        }
+
+        function sortTable(column) {
+            currentSort.direction = currentSort.column === column && currentSort.direction === 'ascending' ? 'descending' : 'ascending';
+            currentSort.column = column;
+            leaderboardData.sort((a, b) => {
+                if (a[column] < b[column]) return currentSort.direction === 'ascending' ? -1 : 1;
+                if (a[column] > b[column]) return currentSort.direction === 'ascending' ? 1 : -1;
+                return 0;
+            });
+            renderTable();
+        }
+
+        document.querySelectorAll('th').forEach(th => {
+            th.addEventListener('click', () => sortTable(th.getAttribute('data-sort')));
+        });
+
+        renderTable();
+    </script>
+</body>
+</html>
